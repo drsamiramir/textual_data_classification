@@ -1,1 +1,3 @@
 numpy >= 1.18.0
+nltk>=3.5
+Scikit-learn>=0.23R
