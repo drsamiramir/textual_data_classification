@@ -5,6 +5,7 @@ import re
 
 
 def tokenize(text):
+    """NLTK Tokenizer"""
     tokens = nltk.word_tokenize(text)
     return tokens
 

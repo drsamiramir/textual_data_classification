@@ -1,8 +1,8 @@
-from src.preparation.data_preparation import *
+from src.preparation.linguistic_processing import *
 import unittest
 
 
-class DataPreparationTest(unittest.TestCase):
+class LinguisticProcessingTest(unittest.TestCase):
 
     def test_tokenize(self):
         sentence = "The official home of the Python Programming Language."
