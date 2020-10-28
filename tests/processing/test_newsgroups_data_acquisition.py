@@ -25,7 +25,7 @@ class NewsgroupAcquistitionTest(unittest.TestCase):
 
         # Feature Engineering
         print("TF-IDF on text data ... ")
-        tfidf = TfidfVectorizer(binary=True)
+        tfidf = TfidfVectorizer(binary=True, max_features=100000, stop_words='english')
         X_train = tfidf.fit_transform(texts_train).astype('float32')
         X_test = tfidf.transform(texts_test).astype('float32')
 
@@ -37,31 +37,22 @@ class NewsgroupAcquistitionTest(unittest.TestCase):
         # Model Training
         print("Create model ... ")
 
-        estimator = KerasClassifier(build_fn=self.build_model, epochs=10, batch_size=100)
+        estimator = KerasClassifier(build_fn=self.build_model, epochs=10, batch_size=140)
         estimator.fit(X_train, y_train)
 
-    # Predictions
-        print ("Predict on test data ... ")
+        # Predictions
+        print("Predict on test data ... ")
         y_predict = estimator.predict(X_test)
         y_test = lb.transform(labels_test)
-        diff = np.sum(y_predict == y_test)/len(y_predict)
-
-
+        diff = np.sum(y_predict == y_test) / len(y_predict)
 
         print(len(y_predict))
         print(len(y_test))
         print((diff))
 
-
-
-
-
-
-
-
     def build_model(self):
         model = Sequential()
-        model.add(Dense(256, input_dim=130107, activation='relu'))
+        model.add(Dense(256, input_dim=100000, activation='relu'))
         model.add(Dropout(0.3))
         # model.add(Dense(200, activation='relu'))
         # model.add(Dropout(0.3))
@@ -75,5 +66,3 @@ class NewsgroupAcquistitionTest(unittest.TestCase):
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         model.summary()
         return model
-
-
