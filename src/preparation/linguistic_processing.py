@@ -9,7 +9,6 @@ def tokenize(text):
     tokens = nltk.word_tokenize(text)
     return tokens
 
-
 def is_stopword(word):
     """check whether the word is a stopword or not. Basically,
     this method uses the NLTK stopwords and the list of stopwords
