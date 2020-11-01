@@ -4,7 +4,7 @@ import unittest
 
 
 class FeatureExtractionTest(unittest.TestCase):
-    @unittest.skip("Test ignored (just for experiment)")
-    def test_tfidf_extractor(self):
+    @unittest.skip("Test ignored (used only experiment)")
+    def test_tfidf_transformer(self):
         train_data_set, test_data_set = download_newsgroups_dataset()
-        tfidf_extractor(train_data_set, test_data_set)
+        tfidf_transformer(train_data_set, test_data_set)
