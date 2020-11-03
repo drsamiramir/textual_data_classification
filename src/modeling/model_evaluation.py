@@ -1,11 +1,7 @@
-#
-#
-# # Predictions
-# print("Predict on test data ... ")
-# y_predict = estimator.predict(X_test)
-#
-# diff = np.sum(y_predict == y_test) / len(y_predict)
-#
-# print(len(y_predict))
-# print(len(y_test))
-# print(diff)
+from sklearn.metrics import precision_recall_fscore_support
+
+
+def evaluate_dl_model(classifier, X_test, y_test):
+    y_predict = classifier.predict(X_test)
+    eval_score = precision_recall_fscore_support(y_test, y_predict, average='macro')
+    print("[precision, recall, fscore] : " + str(eval_score))
