@@ -7,13 +7,24 @@ import numpy as np
 
 
 class DLClassificationTest(unittest.TestCase):
-    # @unittest.skip("Test ignored (used only experiment)")
-    def test_dl_classifier(self):
+    @unittest.skip("Test ignored (used only experiment)")
+    def test_mlp_classifier(self):
         dataset_train, dataset_test = download_newsgroups_dataset()
         X_train, X_test = tfidf_transformer(dataset_train, dataset_test)
-        #X_train, X_test = count_vectorizer(dataset_train, dataset_test)
+        # X_train, X_test = count_vectorizer(dataset_train, dataset_test)
         y_train = dataset_train.target
         y_test = dataset_test.target
-        dl_classifier = DeepLearningClassifier(X_train.shape[1], len(np.unique(y_train)), X_train, y_train)
-        model = dl_classifier.process_training()
+        mlp_classifier = MLP_Classifier(X_train, y_train, X_test,
+                                        y_test)
+        model = mlp_classifier.perform_training()
         evaluate_dl_model(model, X_test, y_test)
+
+    # @unittest.skip("Test ignored (used only experiment)")
+    def test_mlp_classifier(self):
+        dataset_train, dataset_test = download_newsgroups_dataset()
+        X_train = dataset_train.data
+        X_test = dataset_test.data
+        y_train = dataset_train.target
+        y_test = dataset_test.target
+        fc_cnn_classifier = FC_CNN_Classifier(X_train, y_train, X_test, y_test)
+        fc_cnn_classifier.perform_training()
