@@ -9,9 +9,7 @@ class FeatureExtractionTest(unittest.TestCase):
         train_data_set, test_data_set = download_newsgroups_dataset()
         tfidf_transformer(train_data_set, test_data_set)
 
-    #@unittest.skip("Test ignored (used only experiment)")
+    @unittest.skip("Test ignored (used only experiment)")
     def test_count_vectorizer(self):
         train_data_set, test_data_set = download_newsgroups_dataset()
         count_vectorizer(train_data_set, test_data_set)
-        model = gensim.models.KeyedVectors.load_word2vec_format('./data/GoogleNews-vectors-negative300.bin', binary=True)
-        model.load_word2vec_format()

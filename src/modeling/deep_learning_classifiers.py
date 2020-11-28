@@ -8,13 +8,15 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.preprocessing import LabelBinarizer
 
 
-## TODO : instanciaton doit permettre le choix de l'architecture et le modèle
 # TODO : Cross validation  and data splitting
 
 class MLP_Classifier:
+    """Multilayer perceptron based classification.  This class should take numerical values as input
+    (X_train, X_test).  A feature engineering step must be performed before (e.g. tfidf, count, ..)"""
+
     def __init__(self, X_train, y_train, X_test, y_test):
         self.input_dim = X_train.shape[1]
-        self.output_dim = len(np.unique(y_train))
+        self.nb_classes = len(np.unique(y_train))
         self.X_train = X_train
         self.y_train = y_train
         self.X_test = X_test
@@ -28,8 +30,6 @@ class MLP_Classifier:
         return classifier
 
     def train_dl_model(self, y_train_binary, y_test_binary):
-        """this method fits and trains the DL model.  In order to select another
-        DL architecture, we must change the build_fn parameter"""
         print("train the model ... ")
         classifier = KerasClassifier(build_fn=self.build_mlp_architecture, epochs=15,
                                      batch_size=200, validation_data=(self.X_test, y_test_binary))
@@ -43,13 +43,17 @@ class MLP_Classifier:
         model.add(Dropout(0.3))
         model.add(Dense(80, activation='relu'))
         model.add(Dropout(0.3))
-        model.add(Dense(self.output_dim, activation='softmax'))
+        model.add(Dense(self.nb_classes, activation='softmax'))
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         model.summary()
         return model
 
 
 class FC_CNN_Classifier:
+    """Francois Chollet’s CNN (FC-CNN) for text classification
+    for more details see : https://blog.keras.io/using-pre-trained-word-embeddings-in-a-keras-model.html
+    """
+
     def __init__(self, X_train, y_train, X_test, y_test, MAX_NB_WORDS=20000, MAX_SEQUENCE_LENGTH=1000):
         self.MAX_NB_WORDS = MAX_NB_WORDS
         self.MAX_SEQUENCE_LENGTH = MAX_SEQUENCE_LENGTH
@@ -57,7 +61,9 @@ class FC_CNN_Classifier:
         self.y_train = y_train
         self.X_test = X_test
         self.y_test = y_test
-        self.embeddings_index, self.embedding_dim = load_glove_indexes("./data/glove.6B.100d.txt")
+        self.nb_classes = len(np.unique(y_train))
+        # self.embeddings_index, self.embedding_dim = load_glove_indexes("./data/glove.6B.100d.txt")
+        self.embeddings_index, self.embedding_dim = load_googlenews_indexes("./data/GoogleNews-vectors-negative300.bin")
         self.word_index = None
 
     def perform_training(self):
@@ -81,10 +87,9 @@ class FC_CNN_Classifier:
         return X_train_num, X_test_num
 
     def train_dl_model(self, y_train_binary, y_test_binary):
-        """this method fits and trains the DL model.  In order to select another"""
         X_train_num, X_test_num = self.process_data()
-        classifier = KerasClassifier(build_fn=self.build_fc_cnn_architecture, epochs=15,
-                                     batch_size=100, validation_data=(X_test_num, y_test_binary))
+        classifier = KerasClassifier(build_fn=self.build_fc_cnn_architecture, epochs=30,
+                                     batch_size=128, validation_data=(X_test_num, y_test_binary))
         classifier.fit(X_train_num, y_train_binary)
         return classifier
 
@@ -104,7 +109,7 @@ class FC_CNN_Classifier:
                                     weights=[embedding_matrix],
                                     input_length=self.MAX_SEQUENCE_LENGTH,
                                     trainable=False)
-        sequence_input = Input(shape=(1000,), dtype='int32')
+        sequence_input = Input(shape=(self.MAX_SEQUENCE_LENGTH,), dtype='int32')
         embedded_sequences = embedding_layer(sequence_input)
         x = Conv1D(128, 5, activation='relu')(embedded_sequences)
         x = MaxPooling1D(5)(x)
@@ -114,9 +119,16 @@ class FC_CNN_Classifier:
         x = MaxPooling1D(35)(x)  # global max pooling
         x = Flatten()(x)
         x = Dense(128, activation='relu')(x)
-        preds = Dense(20, activation='softmax')(x)
+        preds = Dense(self.nb_classes, activation='softmax')(x)
         model = Model(sequence_input, preds)
         model.compile(loss='categorical_crossentropy',
-                      optimizer='adam',
+                      optimizer='rmsprop',
                       metrics=['accuracy'])
         return model
+
+
+class YK_CNN_Classifier:
+    """ This class implements Yoon Kim’s CNN(YK-CNN) for text classification introduced in :
+    Y . Kim. Convolutional Neural Networks for Sentence Classification """
+ # def __init__(self, X_train, y_train, X_test, y_test, MAX_NB_WORDS=20000, MAX_SEQUENCE_LENGTH=1000):
+ #

@@ -8,7 +8,7 @@ import numpy as np
 
 class DLClassificationTest(unittest.TestCase):
     @unittest.skip("Test ignored (used only experiment)")
-    def test_mlp_classifier(self):
+    def test_MLP_classifier(self):
         dataset_train, dataset_test = download_newsgroups_dataset()
         X_train, X_test = tfidf_transformer(dataset_train, dataset_test)
         # X_train, X_test = count_vectorizer(dataset_train, dataset_test)
@@ -19,8 +19,8 @@ class DLClassificationTest(unittest.TestCase):
         model = mlp_classifier.perform_training()
         evaluate_dl_model(model, X_test, y_test)
 
-    # @unittest.skip("Test ignored (used only experiment)")
-    def test_mlp_classifier(self):
+    @unittest.skip("Test ignored (used only experiment)")
+    def test_FC_CNN_classifier(self):
         dataset_train, dataset_test = download_newsgroups_dataset()
         X_train = dataset_train.data
         X_test = dataset_test.data
@@ -28,3 +28,10 @@ class DLClassificationTest(unittest.TestCase):
         y_test = dataset_test.target
         fc_cnn_classifier = FC_CNN_Classifier(X_train, y_train, X_test, y_test)
         fc_cnn_classifier.perform_training()
+
+    def test_YK_CNN_classifier(self):
+        dataset_train, dataset_test = download_newsgroups_dataset()
+        X_train = dataset_train.data
+        X_test = dataset_test.data
+        y_train = dataset_train.target
+        y_test = dataset_test.target
