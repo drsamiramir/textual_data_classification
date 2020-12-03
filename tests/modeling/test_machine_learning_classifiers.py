@@ -1,5 +1,5 @@
 import unittest
-from src.modeling.deep_learning_classifiers import *
+from src.modeling.cnn_classifier import *
 from src.modeling.machine_learning_classifier import *
 from src.processing.newsgroups_data_acquisition import *
 

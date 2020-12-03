@@ -1,7 +1,6 @@
 from src.preparation.feature_extraction import *
 from src.processing.newsgroups_data_acquisition import *
 import unittest
-import gensim
 
 class FeatureExtractionTest(unittest.TestCase):
     @unittest.skip("Test ignored (used only experiment)")

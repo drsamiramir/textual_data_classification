@@ -1,8 +1,3 @@
-import numpy
-from keras_preprocessing.sequence import pad_sequences
-from keras_preprocessing.text import Tokenizer
-from sklearn.preprocessing import LabelBinarizer
-from tensorflow.keras.datasets import imdb
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM

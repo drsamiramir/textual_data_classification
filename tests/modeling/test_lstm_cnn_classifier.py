@@ -1,4 +1,5 @@
 import unittest
+from tensorflow.python.keras.datasets import imdb
 from src.modeling.lstm_cnn_classifier import *
 
 
