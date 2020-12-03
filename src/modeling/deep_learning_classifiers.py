@@ -7,13 +7,11 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.preprocessing import LabelBinarizer
 
-
-# TODO : Cross validation  and data splitting
+""" This module implements some known Deep Learning architecture for text classification"""
 
 class MLP_Classifier:
     """Multilayer perceptron based classification.  This class should take numerical values as input
     (X_train, X_test).  A feature engineering step must be performed before (e.g. tfidf, count, ..)"""
-
     def __init__(self, X_train, y_train, X_test, y_test):
         self.input_dim = X_train.shape[1]
         self.nb_classes = len(np.unique(y_train))
@@ -53,7 +51,6 @@ class FC_CNN_Classifier:
     """Francois Chollet’s CNN (FC-CNN) for text classification
     for more details see : https://blog.keras.io/using-pre-trained-word-embeddings-in-a-keras-model.html
     """
-
     def __init__(self, X_train, y_train, X_test, y_test, MAX_NB_WORDS=20000, MAX_SEQUENCE_LENGTH=1000):
         self.MAX_NB_WORDS = MAX_NB_WORDS
         self.MAX_SEQUENCE_LENGTH = MAX_SEQUENCE_LENGTH
@@ -125,10 +122,3 @@ class FC_CNN_Classifier:
                       optimizer='rmsprop',
                       metrics=['accuracy'])
         return model
-
-
-class YK_CNN_Classifier:
-    """ This class implements Yoon Kim’s CNN(YK-CNN) for text classification introduced in :
-    Y . Kim. Convolutional Neural Networks for Sentence Classification """
- # def __init__(self, X_train, y_train, X_test, y_test, MAX_NB_WORDS=20000, MAX_SEQUENCE_LENGTH=1000):
- #

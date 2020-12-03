@@ -17,7 +17,6 @@ def load_glove_indexes(file_name):
     embedding_dim = len(coefs)
     file.close()
     print('Total %s word vectors.' % len(embeddings_index))
-    print(embeddings_index)
     return embeddings_index, embedding_dim
 
 
