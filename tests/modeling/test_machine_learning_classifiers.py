@@ -1,7 +1,8 @@
 import unittest
 from src.modeling.machine_learning_classifier import *
+from src.preparation.feature_extraction import tfidf_transformer
 from src.processing.newsgroups_data_acquisition import *
-from sklearn.model_selection import train_test_split
+
 
 
 class MLClassificationTest(unittest.TestCase):
@@ -13,6 +14,8 @@ class MLClassificationTest(unittest.TestCase):
         y_test = dataset_test.target
         ml_classifier = MachineLearningClassifier(X_train, y_train, X_test, y_test)
         ml_classifier.train_multinomialNB()
-        ml_classifier.train_linearSVC()
+        ml_classifier.train_svm()
+        #ml_classifier.train_gradient_boosting()
+        ml_classifier.train_random_forest()
 
 
