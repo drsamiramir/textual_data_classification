@@ -1,4 +1,4 @@
-This project implements some know text classification algorithms :
+This project implements some  text classification algorithms :
 
 - Text classification using Machine Learning (with feature engineering)
 - Text classification with some know Deep Learning architecture (MLP, CNN, CNN + LSTM)
