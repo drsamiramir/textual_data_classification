@@ -4,11 +4,11 @@ from tensorflow.keras.layers import Dense, Dropout
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer
 
-""" This module implements some known Deep Learning architecture for text classification"""
 
 class MLP_Classifier:
     """Multilayer perceptron based classification.  This class should take numerical values as input
     (X_train, X_test).  A feature engineering step must be performed before (e.g. tfidf, count, ..)"""
+
     def __init__(self, X_train, y_train, X_test, y_test):
         self.input_dim = X_train.shape[1]
         self.nb_classes = len(np.unique(y_train))
