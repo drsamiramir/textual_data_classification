@@ -3,7 +3,7 @@ from gensim.models import keyedvectors
 
 
 def load_glove_indexes(file_name):
-    print("loading Glove indexes")
+    print("loading Glove indexes ")
     file = open(file_name, encoding="utf8")
     embeddings_index = dict()
     for line in file:
