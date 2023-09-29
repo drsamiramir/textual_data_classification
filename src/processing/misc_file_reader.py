@@ -19,6 +19,7 @@ def load_glove_indexes(file_name):
     print('Total %s word vectors.' % len(embeddings_index))
     return embeddings_index, embedding_dim
 
+#test
 
 def load_googlenews_indexes(file_name):
     print("loading Google News word2vec")
